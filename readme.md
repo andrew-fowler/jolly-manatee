@@ -45,44 +45,44 @@ operations (e.g. click) are exposed as functions.
 ## Scenarios
 
     Scenario: The forecast page is responsive
-    Given I navigate to the weather page
-    Then the weather page is displayed
+        Given I navigate to the weather page
+        Then the weather page is displayed
     
     Scenario: The default forecast is for Glasgow
-    Given I navigate to the weather page
-    Then a forecast for 'Glasgow' is displayed
+        Given I navigate to the weather page
+        Then a forecast for 'Glasgow' is displayed
     
     Scenario: Five daily forecasts are displayed by default
-    Given I navigate to the weather page
-    Then 5 daily forecasts are 'displayed'
+        Given I navigate to the weather page
+        Then 5 daily forecasts are 'displayed'
     
     Scenario: Specifying a correct City value displays 5 daily forecasts
-    Given I load the weather page
-    When I enter a 'correct' city name
-    Then 5 daily forecasts are 'displayed'
+        Given I load the weather page
+        When I enter a 'correct' city name
+        Then 5 daily forecasts are 'displayed'
     
     Scenario: Selecting a daily forecast causes the hourly forecasts to be displayed
-    Given I load the weather page
-    When I select the 'first' day
-    Then hourly forecasts are 'displayed'
+        Given I load the weather page
+        When I select the 'first' day
+        Then hourly forecasts are 'displayed'
     
     Scenario: Deselecting a daily forecast causes the hourly forecasts to be hidden
-    Given I load the weather page
-    And I select the 'first' day
-    And I deselect the 'first' day
-    Then hourly forecasts are 'hidden'
+        Given I load the weather page
+        And I select the 'first' day
+        And I deselect the 'first' day
+        Then hourly forecasts are 'hidden'
 
     Scenario: Each daily forecast should display the expected datapoints
-    Given I load the weather page
-    Then each daily forecast should display 'condition'
-    And each daily forecast should display 'wind speed and direction'
-    And each daily forecast should display 'aggregate rainfall'
-    And each daily forecast should display 'minimum and maximum temperatures'
+        Given I load the weather page
+        Then each daily forecast should display 'condition'
+        And each daily forecast should display 'wind speed and direction'
+        And each daily forecast should display 'aggregate rainfall'
+        And each daily forecast should display 'minimum and maximum temperatures'
 
     Scenario: Specifying an unknown city should display a standard error message
-    Given I load the weather page
-    When I specify an unknown city value
-    Then the standard error message is displayed
+        Given I load the weather page
+        When I specify an unknown city value
+        Then the standard error message is displayed
 
 ## Application issues
 
