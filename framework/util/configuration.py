@@ -8,6 +8,10 @@ def get_var(name):
         assert False, "'{}' environment variable not found.".format(name)
 
 
+def get_target_url():
+    return get_var('TARGET_URL')
+
+
 def execution_environment():
     return get_var('EXECUTION_ENVIRONMENT')
 

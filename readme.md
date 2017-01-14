@@ -13,6 +13,7 @@ To execute the tests across Saucelabs, set the following environment variables
 * SAUCELABS_USERNAME=*Your Saucelabs Username*
 * SAUCELABS_KEY=*Your Saucelabs Key*
 * SAUCELABS_TUNNEL_NAME=*Your Saucelabs Tunnel Name*
+* TARGET_URL=*URL of hosted application*
 
 Note that to access your local machine through Saucelabs you'll need to use the fully qualified domain name of the machine (e.g. http://albeeins01m.corp.mozilla.local:3000)
 
@@ -21,6 +22,7 @@ Note that to access your local machine through Saucelabs you'll need to use the 
 To execute the tests locally, set the following environment variable
 
 * EXECUTION_ENVIRONMENT='local' 
+* TARGET_URL=*URL of hosted application*
 
 **Execution**
 

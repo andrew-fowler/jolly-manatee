@@ -1,6 +1,8 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+
+from framework.util import configuration
 from model.controls import DayForecasts, CityControl
 
 
@@ -15,8 +17,7 @@ class WeatherPage(object):
         self.driver = driver
 
     def load(self):
-        self.driver.get("http://localhost:3000/")
-        # self.driver.get("http://andrfowl01m.corp.skyscanner.local:3000/")
+        self.driver.get(configuration.get_target_url())
         return self
 
     def wait_until_loaded(self):
