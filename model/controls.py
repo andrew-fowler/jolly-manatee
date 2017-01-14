@@ -104,6 +104,12 @@ class DayForecast(object):
         WebDriverWait(self.driver, timeout)\
             .until(lambda s: self.hourly_forecasts.count()==0)
 
+    def get_sum_of_hourly_rainfall(self):
+        sum = 0
+        for hourly_forecast in self.hourly_forecasts.items():
+            sum += int(hourly_forecast.rainfall.text.replace('mm', ''))
+        return sum
+
     @property
     def hourly_forecasts(self):
         return HourlyForecasts(self.driver, self.container.find_element(*Locators.HOURLY_FORECAST_TABLE))
@@ -162,9 +168,16 @@ class HourlyForecasts(object):
     def item(self, index):
         return HourlyForecast(self.driver, self._rows[index])
 
+    def items(self):
+        hourly_forecasts = []
+        for row in self._rows:
+            hourly_forecasts.append(HourlyForecast(self.driver, row))
+        return hourly_forecasts
+
     @property
     def _rows(self):
-        return self.container.find_elements(*Locators.HOURLY_FORECAST_ROW)
+        rows = self.container.find_elements(*Locators.HOURLY_FORECAST_ROW)
+        return rows
 
 
 class HourlyForecast(object):
@@ -181,27 +194,35 @@ class HourlyForecast(object):
     def click(self):
         self.container.click()
 
+    @property
     def day(self):
         return self.container.find_element(*Locators.HOUR)
 
+    @property
     def weather_icon(self):
         return self.container.find_element(*Locators.WEATHER_ICON)
 
+    @property
     def max_temp(self):
         return self.container.find_element(*Locators.MAX_TEMP)
 
+    @property
     def min_temp(self):
         return self.container.find_element(*Locators.MIN_TEMP)
 
+    @property
     def wind_speed(self):
         return self.container.find_element(*Locators.WIND_SPEED)
 
+    @property
     def wind_direction_icon(self):
         return self.container.find_element(*Locators.WIND_DIRECTION_ICON)
 
+    @property
     def rainfall(self):
         return self.container.find_element(*Locators.RAINFALL)
 
+    @property
     def pressure(self):
         return self.container.find_element(*Locators.PRESSURE)
 
@@ -216,12 +237,12 @@ class Locators(object):
     HOURLY_FORECAST_ROW = By.XPATH, ".//div[@class='detail']"
     HOUR = By.XPATH, "//span[@class='hour']"
 
-    PRESSURE = By.XPATH, "//span[contains(@data-test,'pressure')]"
-    RAINFALL = By.XPATH, "//span[@class='rainfall']"
-    WIND_DIRECTION_ICON = By.XPATH, "//span[contains(@data-test, 'direction')]"
-    WIND_SPEED = By.XPATH, "//span[@class='speed']"
-    MIN_TEMP = By.XPATH, "//span[contains(@data-test,'minimum')]"
-    MAX_TEMP = By.XPATH, "//span[@class='max']"
-    WEATHER_ICON = By.XPATH, "//*[name()='svg' and contains(@data-test,'description')]"
-    DATE = By.XPATH, "//span[contains(@data-test,'date')]"
-    DAY = By.XPATH, "//span[contains(@data-test,'day')]"
+    PRESSURE = By.XPATH, ".//span[contains(@data-test,'pressure')]"
+    RAINFALL = By.XPATH, ".//span[@class='rainfall']"
+    WIND_DIRECTION_ICON = By.XPATH, ".//span[contains(@data-test, 'direction')]"
+    WIND_SPEED = By.XPATH, ".//span[@class='speed']"
+    MIN_TEMP = By.XPATH, ".//span[contains(@data-test,'minimum')]"
+    MAX_TEMP = By.XPATH, ".//span[@class='max']"
+    WEATHER_ICON = By.XPATH, ".//*[name()='svg' and contains(@data-test,'description')]"
+    DATE = By.XPATH, ".//span[contains(@data-test,'date')]"
+    DAY = By.XPATH, ".//span[contains(@data-test,'day')]"

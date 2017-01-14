@@ -84,6 +84,11 @@ operations (e.g. click) are exposed as functions.
         When I specify an unknown city value
         Then the standard error message is displayed
 
+    Scenario: The Daily forecast row displays the sum rainfall of the Hourly forecast
+        Given I load the weather page
+        And I select the 'first' day
+        Then the daily forecast row displays the sum rainfall of the hourly forecasts
+
 ## Application issues
 
 ### Mobile Web

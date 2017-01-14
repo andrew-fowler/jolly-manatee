@@ -59,7 +59,7 @@ def test_deselecting_day_hides_hourly_forecast(driver):
 
     page = WeatherPage(driver).load()
 
-    daily_forecast = page.day_forecasts.item(1)
+    daily_forecast = page.day_forecasts.item(0)
 
     daily_forecast.click()
     daily_forecast.click()
@@ -96,3 +96,14 @@ def test_specifying_unknown_city_displays_standard_error(driver):
     page = WeatherPage(driver).load()
     page.city.send_keys("Unknown")
     assert page.error.is_displayed(), "Error not displayed as expected after specifying incorrect City"
+
+
+def test_daily_forecast_correctly_sums_rainfall(driver):
+    # Given I load the weather page
+    # And I select the first day
+    # Then the daily forecast row displays the sum rainfall of the hourly forecasts
+    page = WeatherPage(driver).load()
+    page.day_forecasts.item(0).click()
+    total_hourly_rainfall = page.day_forecasts.item(0).get_sum_of_hourly_rainfall()
+
+    assert_equal(expected=total_hourly_rainfall, actual=int(page.day_forecasts.item(0).rainfall.text.replace('mm', '')))
