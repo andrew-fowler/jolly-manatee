@@ -3,30 +3,39 @@ from model.pages import WeatherPage
 
 
 def test_page_is_accessible(driver):
+    # Given I navigate to the weather page
+    # Then the weather page is displayed
     WeatherPage(driver).load()
-    assert_equal(expected="5 Weather Forecast", actual=driver.title)
+    assert_equal(expected="5 Weather Forecast", actual=driver.title,
+                 message="The weather page was not displayed as expected.")
 
 
 def test_default_city_is_glasgow(driver):
+    # Given I navigate to the weather page
+    # Then a forecast for 'Glasgow' is displayed
     page = WeatherPage(driver).load()
-    assert_equal(expected="Glasgow", actual=page.city.text)
+    assert_equal(expected="Glasgow", actual=page.city.text,
+                 message="The forecast Glasgow was not displayed by default")
 
 
 def test_by_default_5_rows_are_displayed(driver):
+    # Given I navigate to the weather page
+    # Then 5 daily forecasts are displayed
     page = WeatherPage(driver).load()
-    assert_equal(expected=5, actual=page.day_forecasts.count())
+    assert_equal(expected=5, actual=page.day_forecasts.count(),
+                 message="5 daily forecasts were not displayed as expected")
 
 
 def test_entering_city_displays_five_days_forecast(driver):
     # Given I load the weather page
-    # When I enter a city name
-    # Then 5 days are displayed
+    # When I enter a correct city name
+    # Then 5 daily forecasts are displayed
 
     page = WeatherPage(driver).load()
     page.city.send_keys("Edinburgh")
 
-    # TODO: May need to wait for page to stabilise here
-    assert_equal(expected=5, actual=page.day_forecasts.count())
+    assert_equal(expected=5, actual=page.day_forecasts.count(),
+                 message="Entering a City value did not cause 5 daily forecasts to be displayed")
 
 
 def test_selecting_day_displays_three_hours_of_forecast(driver):
@@ -38,14 +47,16 @@ def test_selecting_day_displays_three_hours_of_forecast(driver):
 
     page.day_forecasts.item(0).click()
 
-    assert page.day_forecasts.item(0).hourly_forecasts.count() > 0
+    assert page.day_forecasts.item(0).hourly_forecasts.count() > 0, \
+        "Selecting a daily forecast did not display the hourly forecasts"
 
 
 def test_deselecting_day_hides_hourly_forecast(driver):
     # Given I load the weather page
     # And I select the first day
-    # And I select the first day
-    # Then the hourly forecast disappears
+    # And I deselect the first day
+    # Then hourly forecasts are hidden
+
     page = WeatherPage(driver).load()
 
     daily_forecast = page.day_forecasts.item(1)
@@ -56,7 +67,7 @@ def test_deselecting_day_hides_hourly_forecast(driver):
     daily_forecast.wait_until_hourlies_hidden()
 
     assert_equal(expected=0, actual=daily_forecast.hourly_forecasts.count(),
-                 message="Unexpectedly found hourly forecasts.")
+                 message="Unexpectedly found hourly forecasts after deselecting a daily forecast.")
 
 
 def test_day_attributes_are_displayed_by_default(driver):
@@ -84,4 +95,4 @@ def test_specifying_unknown_city_displays_standard_error(driver):
     # Then the standard error message is displayed
     page = WeatherPage(driver).load()
     page.city.send_keys("Unknown")
-    assert page.error.is_displayed(), "Error not displayed as expected"
+    assert page.error.is_displayed(), "Error not displayed as expected after specifying incorrect City"
