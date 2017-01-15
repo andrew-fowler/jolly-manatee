@@ -1,5 +1,7 @@
+from time import sleep
+
 from framework.util.asserts import assert_equal
-from model.pages import WeatherPage
+from model.pages.weather import WeatherPage
 
 
 def test_page_is_accessible(driver):
@@ -60,11 +62,8 @@ def test_deselecting_day_hides_hourly_forecast(driver):
     page = WeatherPage(driver).load()
 
     daily_forecast = page.day_forecasts.item(0)
-
     daily_forecast.click()
     daily_forecast.click()
-
-    daily_forecast.wait_until_hourlies_hidden()
 
     assert_equal(expected=0, actual=daily_forecast.hourly_forecasts.count(),
                  message="Unexpectedly found hourly forecasts after deselecting a daily forecast.")
