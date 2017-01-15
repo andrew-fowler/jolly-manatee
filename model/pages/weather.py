@@ -3,7 +3,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 from framework.util import configuration
-from model.controls import DayForecasts, CityControl
+from model.controls.city_input import CityControl
+from model.controls.day_forecasts import DayForecasts
 
 
 class WeatherPage(object):
